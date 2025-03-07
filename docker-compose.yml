@@ -1,0 +1,36 @@
+services:
+  api:
+    container_name: diffnote-api
+    build: .
+    ports:
+      - "8000:8000"
+    user: vscode
+    command: sleep infinity
+    volumes:
+      - diffnote-api-data:/workspaces/diffnote
+      - ./:/workspaces/diffnote:cached
+    networks:
+      - diffnote-network
+
+  db:
+    container_name: diffnote-postgres
+    image: postgres:16
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: diffnote
+    volumes:
+      - diffnote-db-data:/var/lib/postgresql/data
+    networks:
+      - diffnote-network
+
+networks:
+  diffnote-network:
+    driver: bridge
+
+volumes:
+  diffnote-db-data:
+  diffnote-api-data:
