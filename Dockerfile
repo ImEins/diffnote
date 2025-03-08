@@ -6,6 +6,10 @@ RUN curl -L -o /usr/local/bin/pixi -fsSL --compressed "https://github.com/prefix
     && chmod +x /usr/local/bin/pixi \
     && pixi info
 
+# Copy and set permissions for post-create script while still root
+COPY ../.devcontainer/post-create.sh /tmp/post-create.sh
+RUN chmod +x /tmp/post-create.sh
+
 # set some user and workdir settings to work nicely with vscode
 USER vscode
 WORKDIR /home/vscode

@@ -17,6 +17,9 @@
 
 	// The 'mounts' property is the list of volumes to mount in the container.
 	"mounts": [
-		"source=diffnote-api-pixi,target=/workspaces/diffnote/.pixi,type=volume"
-	]
+		"source=diffnote-pixi,target=/workspaces/diffnote/.pixi,type=volume"
+	],
+
+	// The 'postCreateCommand' property is the command to run after the container is created.
+	"postCreateCommand": "sh .devcontainer/post-create.sh"
 }
