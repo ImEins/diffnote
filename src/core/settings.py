@@ -34,6 +34,11 @@ class Settings(BaseSettings):
     FASTAPI_REDOCS_URL: str | None = f'{FASTAPI_API_V1_PATH}/redocs'
     FASTAPI_OPENAPI_URL: str | None = f'{FASTAPI_API_V1_PATH}/openapi'
 
+    # Log
+    LOG_LEVEL: str = 'INFO'
+    LOG_FORMAT: str = '<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</> | <lvl>{level: <8}</> | <lvl>{message}</>'
+    LOG_DIR: Path = Path(BASE_PATH) / 'logs'
+
 
 @lru_cache
 def get_settings() -> Settings:
