@@ -1,7 +1,7 @@
 [project]
 authors = [{name = "ImEins", email = "mehdi.ramtakh@gmail.com"}]
 dependencies = []
-description = "Add a short description here"
+description = "A FastAPI-based REST API for a versioned note-taking app."
 name = "diffnote"
 requires-python = ">= 3.11"
 version = "0.1.0"
@@ -12,9 +12,21 @@ requires = ["hatchling"]
 
 [tool.pixi.project]
 channels = ["conda-forge"]
-platforms = ["osx-arm64"]
+platforms = ["linux-aarch64"]
 
 [tool.pixi.pypi-dependencies]
-diffnote = { path = ".", editable = true }
 
 [tool.pixi.tasks]
+dev = "uvicorn src.main:app --reload --port 8000 --host 0.0.0.0"
+serve = "uvicorn src.main:app"
+
+[tool.pixi.dependencies]
+fastapi = ">=0.115.11,<0.116"
+sqlmodel = ">=0.0.24,<0.0.25"
+
+[tool.pixi.environments]
+default = { features = ["dev"], solve-group = "prod" }
+prod = { features = [], solve-group = "prod" }
+
+[tool.pixi.feature.dev.dependencies]
+ruff = "*"
