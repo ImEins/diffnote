@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
 
     # FastAPI
-    FASTAPI_API_V1_PATH: str = '/api/v1'
+    FASTAPI_API_V1_PATH: str = '/api'
     FASTAPI_TITLE: str = 'DiffNote'
     FASTAPI_VERSION: str = '0.0.1'
     FASTAPI_DESCRIPTION: str = 'DiffNote API'
@@ -50,6 +50,13 @@ def get_settings() -> Settings:
     """Get global settings"""
 
     return Settings.model_validate({})
+
+
+@lru_cache
+def get_db_url(type: Literal['asyncpg', 'psycopg2'] = 'asyncpg') -> str:
+    """Get database URL"""
+
+    return f'postgresql+{type}://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}'
 
 
 # Create configuration instance

@@ -8,7 +8,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from src.common.exceptions import DatabaseConnectionError
 from src.common.log import log
-from src.core.settings import settings
+from src.core.settings import get_db_url
 
 
 def create_engine_and_session(url: str | URL):
@@ -26,9 +26,7 @@ def create_engine_and_session(url: str | URL):
         return engine, db_session
 
 
-async_engine, async_db_session = create_engine_and_session(
-    f'postgresql+asyncpg://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}'
-)
+async_engine, async_db_session = create_engine_and_session(get_db_url(type='asyncpg'))
 
 
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
@@ -59,4 +57,4 @@ async def dispose_db():
         await async_engine.dispose()
 
 
-AsyncSessionDep = Annotated[AsyncSession, Depends(get_session)]
+AsyncSessionDI = Annotated[AsyncSession, Depends(get_session)]

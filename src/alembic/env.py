@@ -4,7 +4,7 @@ from sqlalchemy import engine_from_config, pool
 from sqlmodel import SQLModel
 
 from alembic import context
-from src.core.settings import settings
+from src.core.settings import get_db_url
 from src.pkg.note import __models__  # noqa: F401
 
 # this is the Alembic Config object, which provides
@@ -14,7 +14,7 @@ config = context.config
 # Override the config (alembic.ini) to use the environment variables
 config.set_main_option(
     'sqlalchemy.url',
-    f'postgresql+psycopg2://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}',
+    get_db_url(type='psycopg2'),
 )
 
 # Interpret the config file for Python logging.
