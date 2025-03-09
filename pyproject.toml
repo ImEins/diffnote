@@ -17,6 +17,7 @@ platforms = ["linux-aarch64"]
 [tool.pixi.tasks]
 dev = "uvicorn src.main:app --reload --port 8000 --host 0.0.0.0"
 serve = "uvicorn src.main:app"
+test = "pytest -v"
 
 [tool.pixi.dependencies]
 fastapi = ">=0.115.11,<0.116"
@@ -31,3 +32,5 @@ prod = { features = [], solve-group = "prod" }
 
 [tool.pixi.feature.dev.dependencies]
 ruff = "*"
+pytest = "*"
+pytest-asyncio = "*"
