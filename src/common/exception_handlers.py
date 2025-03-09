@@ -76,8 +76,13 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     else:
         message = 'Validation error'
 
+    # Sanitize errors "least privilege"
+    sanitized_errors = [{'loc': err.get('loc'), 'msg': err.get('msg')} for err in errors]
+
     response = await response_base.fail(
-        code=status.HTTP_422_UNPROCESSABLE_ENTITY, msg=f'Invalid request parameters: {message}', data={'errors': errors}
+        code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        msg=f'Invalid request parameters: {message}',
+        data={'errors': sanitized_errors},
     )
 
     return JSONResponse(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, content=response.model_dump())
@@ -97,7 +102,7 @@ async def sqlalchemy_exception_handler(request: Request, exc: SQLAlchemyError) -
     log.error(f'Database error: {str(exc)}')
 
     response = await response_base.fail(
-        code=status.HTTP_500_INTERNAL_SERVER_ERROR, msg='Database error', data={'detail': str(exc)}
+        code=status.HTTP_500_INTERNAL_SERVER_ERROR, msg='An error occurred while processing the request.'
     )
 
     return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=response.model_dump())
@@ -116,9 +121,7 @@ async def general_exception_handler(request: Request, exc: Exception) -> JSONRes
     """
     log.error(f'Unhandled exception: {exc.__class__.__name__}, Message: {str(exc)}')
 
-    response = await response_base.fail(
-        code=status.HTTP_500_INTERNAL_SERVER_ERROR, msg='Internal server error', data={'detail': str(exc)}
-    )
+    response = await response_base.fail(code=status.HTTP_500_INTERNAL_SERVER_ERROR, msg='Internal server error')
 
     return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=response.model_dump())
 
