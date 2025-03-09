@@ -21,3 +21,20 @@ class DatabaseConnectionError(BaseExceptionMixin):
 
     def __init__(self, message: str | None = None, data: Any = None, code: int | None = None):
         super().__init__(message, data, code)
+
+
+class DatabaseError(BaseExceptionMixin):
+    """Database error"""
+
+    code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    message = 'Database error'
+
+    def __init__(self, message: str | None = None, data: Any = None, code: int | None = None):
+        super().__init__(message, data, code)
+
+
+class NotFoundException(BaseExceptionMixin):
+    """Not found exception"""
+
+    code = status.HTTP_404_NOT_FOUND
+    message = 'Not found'

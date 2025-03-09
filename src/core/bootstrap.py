@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.common.exception_handlers import register_exception_handlers
 from src.common.log import setup_logging
 from src.core.database import create_db_tables, dispose_db
 from src.core.settings import settings
@@ -41,6 +42,7 @@ def register_app():
 
     register_middleware(app)
     register_router(app)
+    register_exception_handlers(app)
     return app
 
 
