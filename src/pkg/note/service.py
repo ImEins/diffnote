@@ -26,27 +26,14 @@ class NoteService(DatabaseSession):
         Returns:
             The created note.
         """
-        # Parse the JSON string into a dict if it's a string
-        content_dict = note.content
-        if isinstance(content_dict, str):
-            import json
-
-            try:
-                content_dict = json.loads(content_dict)
-            except json.JSONDecodeError:
-                content_dict = {'text': content_dict}
-
-        # Create note with the dict content
         note_data = note.model_dump()
-        note_data['content'] = content_dict
         db_note = NoteModel(**note_data)
 
-        # Save the note to the database
         note_model = await note_crud.create_note(self.db_session, db_note)
 
         return NoteResponseSchema.model_validate(note_model)
 
-    async def get_note(self, note_id: int) -> NoteModel:
+    async def get_note(self, note_id: int) -> NoteResponseSchema:
         """
         Get a note by its ID.
 
@@ -56,7 +43,9 @@ class NoteService(DatabaseSession):
         Returns:
             The note with the given ID.
         """
-        return await note_crud.get_note(self.db_session, note_id)
+        note_model = await note_crud.get_note(self.db_session, note_id)
+
+        return NoteResponseSchema.model_validate(note_model)
 
 
 NoteServiceDI = Annotated[NoteService, Depends(NoteService)]
