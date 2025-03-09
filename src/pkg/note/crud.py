@@ -2,7 +2,6 @@ from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from .model import Note as NoteModel
-from .schema import NoteCreateSchema
 
 
 class NoteCRUD:
@@ -11,7 +10,7 @@ class NoteCRUD:
     """
 
     @staticmethod
-    async def create_note(db: AsyncSession, note: NoteCreateSchema) -> NoteModel:
+    async def create_note(db: AsyncSession, note: NoteModel) -> NoteModel:
         """
         Create a new note.
 
@@ -22,10 +21,10 @@ class NoteCRUD:
         Returns:
             The created note.
         """
-        note_model = NoteModel(**note.model_dump())
-        db.add(note_model)
+        db.add(note)
         await db.commit()
-        return note_model
+        await db.refresh(note)
+        return note
 
     @staticmethod
     async def get_note(db: AsyncSession, note_id: int) -> NoteModel:

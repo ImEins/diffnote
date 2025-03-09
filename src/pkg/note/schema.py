@@ -3,11 +3,13 @@ import json
 from datetime import datetime
 from typing import Any
 
-from pydantic import BaseModel, field_validator
+from pydantic import field_validator
 from sqlmodel import Field
 
+from src.common.schemas import BaseSchema
 
-class NoteBaseSchema(BaseModel):
+
+class NoteBaseSchema(BaseSchema):
     title: str | None = Field(default='Untitled')
     content: str | dict[str, Any]
 
