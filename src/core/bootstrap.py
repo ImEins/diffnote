@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.common.log import setup_logging
 from src.core.database import create_db_tables, dispose_db
 from src.core.settings import settings
+from src.pkg.router import router
 
 
 @asynccontextmanager
@@ -39,7 +40,7 @@ def register_app():
     setup_logging()
 
     register_middleware(app)
-
+    register_router(app)
     return app
 
 
@@ -56,3 +57,10 @@ def register_middleware(app: FastAPI):
         allow_methods=['*'],
         allow_headers=['*'],
     )
+
+
+def register_router(app: FastAPI):
+    """
+    Register the router for the FastAPI app.
+    """
+    app.include_router(router)

@@ -1,4 +1,6 @@
-from .model import NoteModel
-from .version.model import NoteVersionModel
+from .model import Note
+from .router import router as note_router
+from .version.model import NoteVersion
 
-__all__ = ['NoteModel', 'NoteVersionModel']
+__models__ = [Note, NoteVersion]
+__all__ = ['note_router']
