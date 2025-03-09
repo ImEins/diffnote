@@ -18,4 +18,4 @@ class NoteVersionModel(SQLModel, TimeStampMixin, table=True):
     note_id: int = Field(foreign_key='note.id')
 
     # Relationships
-    note: 'Note' = Relationship(back_populates='versions', sa_relationship_kwargs={'lazy': 'selectin'})
+    note: 'Note' = Relationship(back_populates='versions', sa_relationship_kwargs={'lazy': 'joined'})
