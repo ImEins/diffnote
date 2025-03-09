@@ -20,7 +20,7 @@ def create_engine_and_session(url: str | URL):
     except Exception as e:
         log.critical(f'❌ No connection to the database -> {e}')
 
-        raise DatabaseConnectionError()
+        raise DatabaseConnectionError(message=f'Failed to connect: {str(e)}')
     else:
         db_session = async_sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
         return engine, db_session
