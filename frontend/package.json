@@ -1,14 +1,15 @@
 {
-  "name": "my-router-app",
-  "version": "0.0.0",
+  "name": "diffnote-frontend",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "dev": "vite --port=3001",
-    "build": "vite build",
-    "serve": "vite preview",
-    "start": "vite"
+    "dev": "orval --config ./orval.config.cts && vite",
+    "build": "orval --config ./orval.config.cts && tsc && vite build",
+    "preview": "vite preview",
+    "start": "vite",
+    "orval": "orval --config ./orval.config.cts"
   },
   "devDependencies": {
     "@tanstack/router-plugin": "^1.114.4",
