@@ -1,6 +1,6 @@
 import asyncio
 
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, Sequence, TypeVar
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
@@ -15,6 +15,23 @@ class BaseSchema(BaseModel):
     """Base schema class with ORM mode enabled for all schemas."""
 
     model_config = {'from_attributes': True}
+
+
+class PaginationSchema(BaseModel, Generic[T]):
+    """
+    Pagination schema
+
+    .. tip::
+
+        This schema is used to paginate the data.
+    """
+
+    items: Sequence[T]
+    total: int
+    page: int
+    size: int
+    total_pages: int
+    links: dict[str, str | None]
 
 
 class ResponseModel(BaseModel, Generic[T]):

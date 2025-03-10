@@ -105,6 +105,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/websockets-15.0.1-py313h31d5739_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/yaml-0.2.5-hf897c2e_2.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.21.0-pyhd8ed1ab_1.conda
+      - pypi: https://files.pythonhosted.org/packages/72/f3/a0a1e7efd88dba07743665d1f6f88008c9a1e174458581ecaa53b8699a7c/fastapi_pagination-0.12.34-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0b/53/a64f03044927dc47aafe029c42a5b7aabc38dfb813475e0e1bf71c4a59d0/pydantic_settings-2.8.1-py3-none-any.whl
   prod:
     channels:
@@ -203,6 +204,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/websockets-15.0.1-py313h31d5739_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/yaml-0.2.5-hf897c2e_2.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.21.0-pyhd8ed1ab_1.conda
+      - pypi: https://files.pythonhosted.org/packages/72/f3/a0a1e7efd88dba07743665d1f6f88008c9a1e174458581ecaa53b8699a7c/fastapi_pagination-0.12.34-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0b/53/a64f03044927dc47aafe029c42a5b7aabc38dfb813475e0e1bf71c4a59d0/pydantic_settings-2.8.1-py3-none-any.whl
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/_openmp_mutex-4.5-2_gnu.tar.bz2
@@ -439,6 +441,30 @@ packages:
   - pkg:pypi/fastapi-cli?source=hash-mapping
   size: 15546
   timestamp: 1734302408607
+- pypi: https://files.pythonhosted.org/packages/72/f3/a0a1e7efd88dba07743665d1f6f88008c9a1e174458581ecaa53b8699a7c/fastapi_pagination-0.12.34-py3-none-any.whl
+  name: fastapi-pagination
+  version: 0.12.34
+  sha256: 089d1078aae1784395b4dbd923d0c8246641ddcc291c5ec6d92a30edb92ecbdd
+  requires_dist:
+  - sqlalchemy>=1.3.20 ; extra == 'all' or extra == 'asyncpg' or extra == 'sqlalchemy'
+  - asyncpg>=0.24.0 ; extra == 'all' or extra == 'asyncpg'
+  - beanie>=1.25.0 ; extra == 'all' or extra == 'beanie'
+  - bunnet>=1.1.0,<2.0.0 ; extra == 'all' or extra == 'bunnet'
+  - databases>=0.6.0 ; extra == 'all' or extra == 'databases' or extra == 'django' or extra == 'orm'
+  - django<5.0.0 ; extra == 'all' or extra == 'django'
+  - mongoengine>=0.23.1,<0.30.0 ; extra == 'all' or extra == 'mongoengine'
+  - motor>=3.6.0,<4.0.0 ; extra == 'all' or extra == 'motor'
+  - odmantic>=1.0.2,<2.0.0 ; extra == 'all' or extra == 'odmantic'
+  - orm>=0.3.1 ; extra == 'all' or extra == 'orm'
+  - piccolo>=0.89,<1.22 ; extra == 'all' or extra == 'piccolo'
+  - pony>=0.7.16,<0.8.0 ; extra == 'all'
+  - pydantic>=1.9.1
+  - scylla-driver>=3.25.6,<4.0.0 ; extra == 'all' or extra == 'scylla-driver'
+  - sqlakeyset>=2.0.1680321678,<3.0.0 ; extra == 'all' or extra == 'sqlalchemy' or extra == 'sqlmodel'
+  - sqlmodel>=0.0.22 ; extra == 'all' or extra == 'sqlmodel'
+  - tortoise-orm>=0.22.0 ; extra == 'all' or extra == 'tortoise'
+  - typing-extensions>=4.8.0,<5.0.0
+  requires_python: '>=3.8,<4.0'
 - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/greenlet-3.1.1-py313hb6a6212_1.conda
   sha256: d2c748f692c426acae5e74f89bd19508d986d0d3677ed6a5cc0a5edb211989ce
   md5: 5950a8853bde984c2759b5718e5a6e9d
