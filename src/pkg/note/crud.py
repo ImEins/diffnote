@@ -1,5 +1,9 @@
+from typing import Any
+
 from sqlalchemy.exc import SQLAlchemyError
+from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlmodel.sql.expression import SelectOfScalar
 
 from src.common.exceptions import DatabaseError, NotFoundException
 
@@ -52,6 +56,24 @@ class NoteCRUD:
                 raise NotFoundException(message='Note not found', data={'note_id': note_id})
 
             return note
+        except SQLAlchemyError as e:
+            raise DatabaseError(message=str(e))
+
+    @staticmethod
+    async def get_notes(db: AsyncSession, **kwargs: Any) -> SelectOfScalar[Any]:
+        """
+            Get notes query with optional filters
+
+        Args:
+            db: Database session
+            title: Optional title filter
+            status: Optional status filter
+
+        Returns:
+            SQLModel select query for notes
+        """
+        try:
+            return select(NoteModel).filter_by(**kwargs)
         except SQLAlchemyError as e:
             raise DatabaseError(message=str(e))
 
