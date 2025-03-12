@@ -59,6 +59,15 @@ function SidebarLeft({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	}
 
 	/*
+	 * Add sorted notes calculation
+	 */
+	const sortedNotes = [...notes].sort((a, b) => {
+		const dateA = new Date(a.updated_at || 0).getTime()
+		const dateB = new Date(b.updated_at || 0).getTime()
+		return sortOrder === 'asc' ? dateA - dateB : dateB - dateA
+	})
+
+	/*
 	 * Render
 	 */
 	return (
@@ -121,7 +130,7 @@ function SidebarLeft({ ...props }: React.ComponentProps<typeof Sidebar>) {
 						<p className="text-sm text-muted-foreground">Unable to load notes, please try again.</p>
 					) : viewMode === 'list' ? (
 						<div className="space-y-2">
-							{notes.map(note => {
+							{sortedNotes.map(note => {
 								const isSelected = selectedNote?.id === note.id
 								const previewText = extractTextFromContent(note.content).trim().substring(0, 60)
 
@@ -149,7 +158,7 @@ function SidebarLeft({ ...props }: React.ComponentProps<typeof Sidebar>) {
 						</div>
 					) : (
 						<div className="flex flex-col gap-y-4">
-							{notes.map(note => {
+							{sortedNotes.map(note => {
 								const isSelected = selectedNote?.id === note.id
 								const previewText = extractTextFromContent(note.content).trim().substring(0, 150)
 
