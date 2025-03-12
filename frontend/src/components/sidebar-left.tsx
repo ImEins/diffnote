@@ -63,13 +63,13 @@ function SidebarLeft({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	 */
 	return (
 		<>
-			<div className={cn('absolute z-10 left-1 top-5', state !== 'collapsed' ? 'hidden' : '')}>
-				<Button variant="ghost" size="icon" onClick={toggleSidebar}>
+			<div className={cn('absolute z-10 left-1 top-3', state !== 'collapsed' ? 'hidden' : '')}>
+				<Button variant="secondary" className="shadow-none" size="icon" onClick={toggleSidebar}>
 					<Menu />
 				</Button>
 			</div>
 
-			<Sidebar collapsible="offcanvas" className="border-none" {...props}>
+			<Sidebar collapsible="offcanvas" className="border-none z-20" {...props}>
 				<SidebarHeader className="p-0 px-4 mt-4">
 					<div className="flex items-center justify-between">
 						<div className="flex items-center gap-2">
