@@ -13,7 +13,7 @@ import { Extensions } from '@/lib/tiptap'
 import { cn } from '@/lib/utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { JSONContent, useEditor } from '@tiptap/react'
-import { ArrowLeft, Diff, History } from 'lucide-react'
+import { ArrowLeft, Eye, History } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import VersionHistory from './version-history'
@@ -238,8 +238,7 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 			editor?.commands.setTextSelection({ from: editor.state.doc.content.size, to: editor.state.doc.content.size })
 			editor?.commands.insertContent([
 				{
-					type: 'heading',
-					attrs: { level: 3 },
+					type: 'paragraph',
 					content: [{ type: 'text', text: '+' }],
 				},
 			])
@@ -260,8 +259,7 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 			if (deletions.length > 0) {
 				editor?.commands.insertContent([
 					{
-						type: 'heading',
-						attrs: { level: 3 },
+						type: 'paragraph',
 						content: [{ type: 'text', text: `- ` }],
 					},
 				])
@@ -280,8 +278,7 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 			if (additions.length > 0) {
 				editor?.commands.insertContent([
 					{
-						type: 'heading',
-						attrs: { level: 3 },
+						type: 'paragraph',
 						content: [{ type: 'text', text: `+ ` }],
 					},
 				])
@@ -300,7 +297,7 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 			editor?.commands.insertContent([
 				{
 					type: 'heading',
-					attrs: { level: 3 },
+					attrs: { level: 2 },
 					content: [{ type: 'text', text: 'Full Content:' }],
 				},
 			])
@@ -317,11 +314,37 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 	}
 
 	/*
+	 * Handle restore version
+	 * We create a new version with the current content so make sure it's not lost
+	 * Then we update the note with the previous version content
+	 *
+	 * TODO: Don't create a new version if the content is the same as the current version or empty
+	 */
+	const handleRestoreVersion = async () => {
+		const versionContent = noteVersions?.data?.items.find(v => v.id === currentVersionId)?.content || ''
+
+		await createNoteVersionMutation.mutateAsync({
+			data: {
+				note_id: selectedNote.id,
+				content,
+			},
+		})
+
+		await updateNoteMutation.mutateAsync({
+			noteId: selectedNote.id,
+			data: {
+				title: selectedNote.title,
+				content: versionContent,
+			},
+		})
+	}
+
+	/*
 	 * Render
 	 */
 	return (
 		<div className="h-full flex">
-			<div className={cn('flex-1 w-3/4 mt-4', state === 'collapsed' ? 'px-12 ' : 'px-8')}>
+			<div className={cn('flex-1 w-3/4 mt-4', state === 'collapsed' ? 'pl-12 pr-4' : 'px-8')}>
 				<div className="flex sticky top-0 bg-background z-10 justify-between items-center flex-col-reverse gap-y-4 xl:flex-row">
 					{currentVersionId === null ? (
 						<>
@@ -337,7 +360,7 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 								</div>
 								<Button
 									variant="default"
-									className="text-xs"
+									className={cn('text-xs', createNoteVersionMutation.isPending && 'animate-pulse')}
 									size="sm"
 									title="Commit version"
 									onClick={() => {
@@ -348,15 +371,16 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 											},
 										})
 									}}
+									disabled={createNoteVersionMutation.isPending}
 								>
 									Commit version
 								</Button>
 								<Button
-									onClick={() => setShowVersionHistory(!showVersionHistory)}
+									title="Note history"
 									variant="secondary"
 									size="icon"
-									title="Note history"
 									className="hover:bg-primary/5 shadow-none"
+									onClick={() => setShowVersionHistory(!showVersionHistory)}
 								>
 									<History className="size-4" />
 								</Button>
@@ -369,8 +393,25 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 							</Button>
 							<div className="flex items-center gap-x-2">
 								<span className="text-sm text-muted-foreground">Total: {totalEdits} edits </span>
-								<Button variant="secondary" size="icon" onClick={handleDiffMode}>
-									<Diff />
+								<Button
+									title="Show diff"
+									variant="ghost"
+									size="icon"
+									className="hover:bg-primary/5 shadow-none"
+									onClick={handleDiffMode}
+									disabled={totalEdits === 0}
+								>
+									<Eye className="size-4" />
+								</Button>
+
+								<Button
+									variant="default"
+									size="sm"
+									className="text-xs"
+									onClick={handleRestoreVersion}
+									disabled={!currentVersionId}
+								>
+									Restore version
 								</Button>
 							</div>
 						</div>

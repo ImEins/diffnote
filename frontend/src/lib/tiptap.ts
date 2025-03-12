@@ -55,7 +55,6 @@ export const Extensions = [
   }),
   Placeholder.configure({
     placeholder: 'Write something...',
-    showOnlyWhenEditable: false,
     emptyEditorClass: 'is-editor-empty',
     emptyNodeClass: 'is-node-empty',
   }),
