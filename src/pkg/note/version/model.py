@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 class NoteVersion(SQLModel, TimeStampMixin, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    version_number: int
+    version_number: int = Field(default=1)
     content: dict[str, Any] = Field(sa_column=Column(JSONB))
 
     # Foreign keys
