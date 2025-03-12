@@ -47,7 +47,8 @@ export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
 
 	const updateNoteMutation = useUpdateNote({
 		mutation: {
-			onSuccess: () => {
+			onSuccess: data => {
+				setSelectedNote(data?.data || null)
 				queryClient.invalidateQueries({ queryKey: getGetNotesQueryKey() })
 			},
 			onError: () => {
