@@ -14,7 +14,7 @@ function WorkspaceComponent() {
 	/*
 	 * Notes context
 	 */
-	const { selectedNote, createNoteMutation, error, refetch, isLoading } = useNotes()
+	const { selectedNote, createNoteMutation, error, refetchNotes, isLoading } = useNotes()
 
 	/*
 	 * Render with isLoading or error
@@ -35,7 +35,7 @@ function WorkspaceComponent() {
 			<MainContent title="An error occurred">
 				<div className="flex items-center gap-x-2">
 					<p>Unable to load notes, try again </p>
-					<Button variant="outline" size="icon" onClick={refetch}>
+					<Button variant="outline" size="icon" onClick={refetchNotes}>
 						<RefreshCcw className="size-4" />
 					</Button>
 				</div>
