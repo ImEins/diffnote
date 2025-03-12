@@ -8,6 +8,7 @@ from src.common.log import setup_logging
 from src.core.database import create_db_tables, dispose_db
 from src.core.settings import settings
 from src.pkg.router import router
+from src.utils.openapi import simplify_operation_ids
 
 
 @asynccontextmanager
@@ -66,3 +67,6 @@ def register_router(app: FastAPI):
     Register the router for the FastAPI app.
     """
     app.include_router(router)
+
+    # Simplify operation IDs for the OpenAPI schema
+    simplify_operation_ids(app)
