@@ -21,9 +21,8 @@ class Note(SQLModel, table=True):
     )
     updated_at: datetime | None = Field(
         description='Update time',
-        sa_column=Column(
-            DateTime(timezone=True), default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc)
-        ),
+        sa_column=Column(DateTime(timezone=True), onupdate=datetime.now(timezone.utc)),
+        default_factory=lambda: datetime.now(timezone.utc),
     )
 
     # Relationships
