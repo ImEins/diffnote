@@ -12,6 +12,23 @@ services:
     networks:
       - diffnote-network
 
+  frontend:
+    container_name: diffnote-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - diffnote-network
+    depends_on:
+      - api
+
   db:
     container_name: diffnote-postgres
     image: postgres:16
