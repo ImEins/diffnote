@@ -8,7 +8,11 @@
 				"charliermarsh.ruff",
 				// this is not the official mypy extension, but it works better than the official since it uses mypy daemon 
 				"matangover.mypy",
-				"ms-azuretools.vscode-docker"
+				"ms-azuretools.vscode-docker",
+				"bradlc.vscode-tailwindcss",
+				"esbenp.prettier-vscode",
+				"rvest.vs-code-prettier-eslint",
+				"dbaeumer.vscode-eslint"
 			],
 			"settings": {
 				// post-create script will install mypy globally
