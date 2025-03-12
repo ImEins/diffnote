@@ -13,8 +13,9 @@ function RootLayout({ children }: RootLayoutProps) {
 		<NotesProvider>
 			<SidebarProvider>
 				<SidebarLeft />
-				<SidebarInset className="px-8 mt-3.5">{children}</SidebarInset>
+				<SidebarInset>{children}</SidebarInset>
 			</SidebarProvider>
+
 			<Toaster />
 		</NotesProvider>
 	)
