@@ -15,7 +15,7 @@ export function SidebarRight({ header, sidebarContent, onClose, ...props }: Side
 	return (
 		<div className="bg-background h-full border-l border-sidebar-border pt-5 sticky" {...props}>
 			<div className="flex flex-col gap-y-8 px-4">
-				<div className="flex justify-between items-center">
+				<div className="flex justify-between items-center sticky top-0 bg-background z-10">
 					<h3 className="text-lg font-bold">{header}</h3>
 					<Button variant="ghost" size="icon" className="size-7 hover:bg-primary/5" onClick={onClose}>
 						<X />
