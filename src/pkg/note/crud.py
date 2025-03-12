@@ -1,7 +1,7 @@
 from typing import Any
 
 from sqlalchemy.exc import SQLAlchemyError
-from sqlmodel import select
+from sqlmodel import desc, select
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel.sql.expression import SelectOfScalar
 
@@ -73,7 +73,7 @@ class NoteCRUD:
             SQLModel select query for notes
         """
         try:
-            return select(NoteModel).filter_by(**kwargs)
+            return select(NoteModel).filter_by(**kwargs).order_by(desc(NoteModel.updated_at))
         except SQLAlchemyError as e:
             raise DatabaseError(message=str(e))
 
