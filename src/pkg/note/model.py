@@ -15,4 +15,6 @@ class Note(SQLModel, TimeStampMixin, table=True):
     content: dict[str, Any] = Field(sa_column=Column(JSONB))
 
     # Relationships
-    versions: list['NoteVersion'] = Relationship(back_populates='note', sa_relationship_kwargs={'lazy': 'selectin'})
+    versions: list['NoteVersion'] = Relationship(
+        back_populates='note', sa_relationship_kwargs={'lazy': 'selectin', 'cascade': 'all, delete'}
+    )
