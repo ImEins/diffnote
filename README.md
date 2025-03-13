@@ -40,12 +40,15 @@ Steps:
 2. Open the project in VS Code
 3. When prompted, click "Reopen in Container" or run the "Dev Containers: Reopen in Container" command
 4. The container will set up automatically with all required dependencies
-5. Once the container setup is complete, both the backend and frontend will start automatically:
-
-   - Backend will run on http://localhost:8000
-   - Frontend will run on http://localhost:5173
-
-   You can view the API documentation at http://localhost:8000/api/docs
+5. **Important startup sequence**:
+   - The backend and frontend will start automatically, but in this order
+   - Wait for the backend to fully initialize at http://localhost:8000 first
+   - **After backend is running**, restart the frontend container to generate API clients properly:
+     ```bash
+     docker restart diffnote-frontend
+     ```
+   - Frontend will be available at http://localhost:5173
+   - You can view the API documentation at http://localhost:8000/api/docs
 
 ### Option 2: Manual Setup
 
