@@ -15,6 +15,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { JSONContent, useEditor } from '@tiptap/react'
 import { ArrowLeft, Eye, History } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { useDebouncedCallback } from 'use-debounce'
 import VersionHistory from './version-history'
 
@@ -98,6 +99,8 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 		mutation: {
 			onSuccess: () => {
 				queryClient.invalidateQueries({ queryKey: getGetNoteVersionsQueryKey(Number(selectedNote.id)) })
+
+				toast.success('Version saved successfully.')
 			},
 		},
 	})
@@ -337,6 +340,8 @@ export function NoteEditor({ selectedNote }: NoteEditorProps) {
 				content: versionContent,
 			},
 		})
+
+		toast.success('Version restored successfully.')
 	}
 
 	/*

@@ -38,6 +38,8 @@ export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
 			onSuccess: data => {
 				setSelectedNote(data?.data || null)
 				queryClient.invalidateQueries({ queryKey: getGetNotesQueryKey() })
+
+				toast.success('Note created.')
 			},
 			onError: () => {
 				toast.error('Unable to create note, please try again.')
@@ -64,6 +66,8 @@ export const NotesProvider: React.FC<NotesProviderProps> = ({ children }) => {
 
 				const filteredNotes = notes.filter(n => n.id !== selectedNote?.id)
 				setSelectedNote(filteredNotes.length > 0 ? filteredNotes[0] : null)
+
+				toast.success('Note deleted.')
 			},
 			onError: () => {
 				toast.error('Unable to delete note, please try again.')
