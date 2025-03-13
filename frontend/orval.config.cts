@@ -1,13 +1,13 @@
 module.exports = {
   lawdesk: {
-    input: "http://localhost:8000/api/openapi",
+    input: "http://api:8000/api/openapi",
 
     output: {
       mode: "single",
       client: "react-query",
       target: "src/gen/endpoints",
       schemas: "src/gen/models",
-      baseUrl: "http://localhost:8000",
+      baseUrl: "http://api:8000",
       override: {
         mutator: {
           path: "./src/lib/axios.ts",
@@ -17,7 +17,7 @@ module.exports = {
     },
   },
   lawdeskZod: {
-    input: "http://localhost:8000/api/openapi",
+    input: "http://api:8000/api/openapi",
     output: {
       mode: "single",
       client: "zod",
