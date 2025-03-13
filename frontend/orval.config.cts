@@ -7,7 +7,6 @@ module.exports = {
       client: "react-query",
       target: "src/gen/endpoints",
       schemas: "src/gen/models",
-      baseUrl: "http://api:8000",
       override: {
         mutator: {
           path: "./src/lib/axios.ts",
