@@ -40,7 +40,12 @@ Steps:
 2. Open the project in VS Code
 3. When prompted, click "Reopen in Container" or run the "Dev Containers: Reopen in Container" command
 4. The container will set up automatically with all required dependencies
-5. **Important startup sequence**:
+5. **Important**: On first launch, you may need to reload VS Code extensions:
+   - Go to the Extensions tab in VS Code
+   - Look for the "Dev Container: diffnote" section
+   - Under "Extensions", if you see a "Reload Window" option, click it
+   - This step is crucial as you may see incorrect syntax highlighting until extensions are properly loaded
+6. **Important startup sequence**:
    - The backend and frontend will start automatically, but in this order
    - Wait for the backend to fully initialize at http://localhost:8000 first
    - **After backend is running**, restart the frontend container to generate API clients properly:
