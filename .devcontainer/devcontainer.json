@@ -16,7 +16,8 @@
 			],
 			"settings": {
 				// post-create script will install mypy globally
-				"mypy.dmypyExecutable": "/home/vscode/.pixi/bin/dmypy"
+				"mypy.dmypyExecutable": "/home/vscode/.pixi/bin/dmypy",
+				"python.interpreterPath": "./.pixi/default/bin/python"
 			}
 		}
 	},
